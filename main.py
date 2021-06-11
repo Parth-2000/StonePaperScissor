@@ -2,7 +2,7 @@ import cv2 as cv
 import HandTrackingModule as HTM
 import time
 import random
-import numpy as np
+# import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -20,7 +20,7 @@ USER_SCORE = 0
 USER_CHOICE = ""
 
 res = ""
-res_img = np.zeros((500, 500, 3), np.uint8)
+# res_img = np.zeros((500, 500, 3), np.uint8)
 final_text = ""
 final_result = []
 tip = [8, 12, 16, 20]
@@ -71,7 +71,7 @@ while True:
             elif zeros == 4:
                 render_text(img, MOVES[0])
                 USER_CHOICE = MOVES[0]
-            elif fingerArr[0] == 1 and fingerArr[1] == 1:
+            elif fingerArr[0] == 1 and fingerArr[1] == 1 and fingerArr[2] == 0 and fingerArr[3] == 0:
                 render_text(img, "Scissor")
                 USER_CHOICE = MOVES[2]
             else:
@@ -82,14 +82,13 @@ while True:
 
     if int(time.time() - start_time) == TIMER:
         comp_choice = random.choice(MOVES)
-        print(comp_choice)
         if USER_CHOICE in MOVES:
             res = win(comp_choice, USER_CHOICE)
-        if res == "Win":
-            USER_SCORE += 1
-        elif res == "Lose":
-            COMP_SCORE += 1
-        final_result.append([USER_CHOICE, comp_choice, res, USER_SCORE, COMP_SCORE])
+            if res == "Win":
+                USER_SCORE += 1
+            elif res == "Lose":
+                COMP_SCORE += 1
+            final_result.append([USER_CHOICE, comp_choice, res, USER_SCORE, COMP_SCORE])
         start_time = time.time()
     else:
         print(f"Be ready with your choice in {TIMER - (int(time.time() - start_time))} seconds.")
